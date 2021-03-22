@@ -1,6 +1,6 @@
 # Chatfuel JSON API examples
 
-[![netlify-deploy](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ttypic/chatfuel-json-api-examples)
+[![netlify-deploy](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/chatfuel-lab/chatfuel-json-api-examples)
 
 ## Installation
 
@@ -8,7 +8,7 @@ Click `Deploy to Netlify` button, or:
 
 1. Fork this repository
 2. Sign up to [netlify.com](https://netlify.com)
-3. Chose `New site from git` option and follow the instructions
+3. Choose `New site from git` option and follow the instructions
 
 ## Usage 
 
