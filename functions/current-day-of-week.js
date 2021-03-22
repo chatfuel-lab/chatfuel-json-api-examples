@@ -1,4 +1,4 @@
-const days = ["Mon", "Tues", "Weds", "Thurs", "Fri", "Sat", "Sun"];
+const days = ["Sun", "Mon", "Tues", "Weds", "Thurs", "Fri", "Sat"];
 const MINS_TO_MS = 60000;
 const HOURS_TO_MINS = 60;
 
@@ -24,7 +24,7 @@ exports.handler = async (event) => {
 
   const response = {
     set_attributes: {
-      day: days[nowInTimezone.getDay() - 1],
+      day: days[nowInTimezone.getDay()],
       hour: nowInTimezone.getHours(),
       minute: nowInTimezone.getMinutes(),
     }

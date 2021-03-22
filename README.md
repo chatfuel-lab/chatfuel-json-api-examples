@@ -16,7 +16,7 @@ Click `Deploy to Netlify` button, or:
 
 Your JSON API is `https://{your-netlify-app-name}.netlify.app/.netlify/functions/current-day-of-week?tz={time zone}`
 
-**Parameters:**
+**Parameters**
 
 - `tz` - time zone, either number in hours or name [see](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)  
 
