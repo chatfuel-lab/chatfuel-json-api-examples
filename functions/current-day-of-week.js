@@ -1,4 +1,4 @@
-const days = ["Sun", "Mon", "Tues", "Weds", "Thurs", "Fri", "Sat"];
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const MINS_TO_MS = 60000;
 const HOURS_TO_MINS = 60;
 
