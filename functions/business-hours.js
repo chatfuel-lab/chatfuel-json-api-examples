@@ -21,11 +21,12 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
-  const { timezone, ...rest } = JSON.parse(event.body);
-  const nowInTimezone = getNowInTimezone(timezone);
+  const { tz, ...rest } = JSON.parse(event.body);
+  const nowInTimezone = getNowInTimezone(tz);
 
   const dayWorkingHours = rest[days[nowInTimezone.getDay()]];
-  const businessIsOpen = dayWorkingHours && isDateInWorkingHours(nowInTimezone, dayWorkingHours);
+  const businessIsClosed = !dayWorkingHours || dayWorkingHours.toLowerCase() === 'closed';
+  const businessIsOpen = !businessIsClosed && isDateInWorkingHours(nowInTimezone, dayWorkingHours);
 
   const response = {
     set_attributes: {
