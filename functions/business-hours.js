@@ -29,7 +29,7 @@ exports.handler = async (event) => {
 
   const response = {
     set_attributes: {
-      business: businessIsOpen ? 'open' : 'close'
+      business: businessIsOpen ? 'open' : 'closed'
     }
   }
 
