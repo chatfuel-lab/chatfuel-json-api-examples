@@ -1,0 +1,4 @@
+[
+  { "category": "device", "text": "What device do you want?" },
+  { "category": "size", "text": "What size do you want?" }
+]

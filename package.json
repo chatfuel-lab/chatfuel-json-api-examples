@@ -2,7 +2,15 @@
   "name": "chatfuel-json-api-examples",
   "repository": "git@github.com:chatfuel-lab/chatfuel-json-api-examples.git",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chatfuel-lab/chatfuel-json-api-examples/issues"
+  },
+  "homepage": "https://github.com/chatfuel-lab/chatfuel-json-api-examples",
   "devDependencies": {
+    "jest": "^26.6.3"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0",
     "node-fetch": "^2.6.1"
   }
 }

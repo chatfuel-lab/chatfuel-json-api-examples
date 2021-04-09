@@ -31,10 +31,19 @@ const getNowInTimezone = (timezone) => {
 }
 
 /**
- * @param {string} americanTime - time (in format 9:30PM)
- * @return {{hours: number, minutes: number}}
+ * @param {Date} date - date
+ * @param {number} days - number of days to add
+ * @return {Date} date plus specified number of days
  */
-const parseAmericanTime = (americanTime) => {
+const addDays = (date, days) => {
+  return new Date(date.getTime() + days * DAY_TO_MS)
+}
+
+/**
+ * @param {string} americanTime - time (in format 9:30PM)
+ * @return {{ hours: number, minutes: number }} parsed time
+ */
+const parseTime = (americanTime) => {
   const offset = americanTime.toUpperCase().endsWith('PM') ? PM_OFFSET : 0;
   const trimmedTime = americanTime.slice(0, americanTime.length - 2);
   const [hoursString, minutesString] = trimmedTime.split(':');
@@ -47,15 +56,16 @@ const parseAmericanTime = (americanTime) => {
  */
 const parseTimeRange = (timeRange) => {
   const [startTime, endTime] = timeRange.split('-');
-  const { hours: startHours, minutes: startMinutes } = parseAmericanTime(startTime.trim());
-  const { hours: endHours, minutes: endMinutes } = parseAmericanTime(endTime.trim());
+  const { hours: startHours, minutes: startMinutes } = parseTime(startTime.trim());
+  const { hours: endHours, minutes: endMinutes } = parseTime(endTime.trim());
   return { startHours, startMinutes, endHours, endMinutes };
 }
 
 module.exports = {
-  DAY_TO_MS,
   days,
   months,
+  addDays,
+  parseTime,
   parseTimeRange,
   getNowInTimezone,
   getDateInTimezone

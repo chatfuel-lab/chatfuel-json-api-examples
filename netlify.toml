@@ -1,0 +1,12 @@
+[build.environment]
+  NODE_ENV = "production"
+  AWS_LAMBDA_JS_RUNTIME = "nodejs12.x"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/"
+  to = "https://github.com/chatfuel-lab/chatfuel-json-api-examples"

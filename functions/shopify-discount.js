@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { months, getDateInTimezone, DAY_IN_MS } = require('./utils/date-utils');
+const { months, addDays, getDateInTimezone } = require('./utils/date-utils');
 
 const generateRandomDC = (length = 255) => {
   const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -13,9 +13,9 @@ exports.handler = async (event) => {
 
   const discountCode = generateRandomDC(8);
   const startsAt = new Date();
-  const endsAt = new Date(startsAt.getTime() + expiration * DAY_IN_MS);
+  const endsAt = addDays(startsAt, expiration);
 
-  const priceRulesPayload = (await fetch(`https://${store_url}/admin/api/2021-04/price_rules.json`, {
+  const priceRulesPayload = await fetch(`https://${store_url}/admin/api/2021-04/price_rules.json`, {
     method: 'post',
     body: JSON.stringify({
       price_rule: {
@@ -30,20 +30,20 @@ exports.handler = async (event) => {
         ends_at: endsAt.toJSON()
       }
     }),
-    headers: {'X-Shopify-Access-Token': password},
-  })).json();
+    headers: { 'X-Shopify-Access-Token': password },
+  }).then(res => res.json());
 
   const id = priceRulesPayload.price_rule.id;
 
-  const discountPayload = (await fetch(`https://${store_url}/admin/api/2021-04/price_rules/${id}/discount_codes.json`, {
+  const discountPayload = await fetch(`https://${store_url}/admin/api/2021-04/price_rules/${id}/discount_codes.json`, {
     method: 'post',
     body: JSON.stringify({
       discount_code: {
         code: discountCode
       }
     }),
-    headers: {'X-Shopify-Access-Token': password},
-  })).json();
+    headers: { 'X-Shopify-Access-Token': password },
+  }).then(res => res.json());
 
   const startsAtInTimezone = getDateInTimezone(timezone, new Date(priceRulesPayload.price_rule.starts_at));
   const endsAtInTimezone = getDateInTimezone(timezone, new Date(priceRulesPayload.price_rule.ends_at));

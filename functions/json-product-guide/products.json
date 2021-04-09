@@ -1,0 +1,6 @@
+[
+  { "name": "Macbook Air", "device": "laptop", "size": "small" },
+  { "name": "Macbook Pro 13", "device": "laptop", "size": "medium" },
+  { "name": "Macbook Pro 16", "device": "laptop", "size": "large" },
+  { "name": "Mac Pro", "device": "desktop", "size": "large" }
+]
