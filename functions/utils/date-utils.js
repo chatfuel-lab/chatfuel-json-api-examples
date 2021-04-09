@@ -1,23 +1,33 @@
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const MINS_TO_MS = 60000;
 const HOURS_TO_MINS = 60;
+const HOURS_IN_DAY = 24;
+const DAY_TO_MS = HOURS_IN_DAY * HOURS_TO_MINS * MINS_TO_MS;
 
 const PM_OFFSET = 12;
+
+/**
+ * @param {string} timezone - time zone or number with offset in hours
+ * @param {Date} date - date
+ * @return {Date} date in provided time zone
+ */
+const getDateInTimezone = (timezone, date) => {
+  if (/^-?\d*\.?\d*$/.test(timezone)) {
+    const offset = parseFloat(timezone);
+    return new Date(date.getTime() + date.getTimezoneOffset() * MINS_TO_MS + offset * HOURS_TO_MINS * MINS_TO_MS);
+  } else {
+    return new Date(date.toLocaleString("en-US", { timeZone: timezone }));
+  }
+}
 
 /**
  * @param {string} timezone - time zone or number with offset in hours
  * @return {Date} current date in provided time zone
  */
 const getNowInTimezone = (timezone) => {
-  const now = new Date();
-
-  if (/^-?\d*\.?\d*$/.test(timezone)) {
-    const offset = parseFloat(timezone);
-    return new Date(now.getTime() + now.getTimezoneOffset() * MINS_TO_MS + offset * HOURS_TO_MINS * MINS_TO_MS);
-  } else {
-    return new Date(now.toLocaleString("en-US", { timeZone: timezone }));
-  }
+  return getDateInTimezone(timezone, new Date());
 }
 
 /**
@@ -43,7 +53,10 @@ const parseTimeRange = (timeRange) => {
 }
 
 module.exports = {
+  DAY_TO_MS,
   days,
+  months,
   parseTimeRange,
-  getNowInTimezone
+  getNowInTimezone,
+  getDateInTimezone
 }

@@ -1,0 +1,8 @@
+{
+  "name": "chatfuel-json-api-examples",
+  "repository": "git@github.com:chatfuel-lab/chatfuel-json-api-examples.git",
+  "license": "MIT",
+  "devDependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
