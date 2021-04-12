@@ -40,7 +40,7 @@ const calculateResponseByLeftProducts = (leftProducts, questions, answers, activ
     return {
       set_attributes: {
         questions_answers: [...answers, option].join(','),
-        questions_number: activeQuestionIndex + 1
+        active_question_index: activeQuestionIndex + 1
       }
     };
   }
@@ -53,7 +53,7 @@ const calculateResponseByLeftProducts = (leftProducts, questions, answers, activ
           title: option,
           set_attributes: {
             questions_answers: [...answers, option].join(','),
-            questions_number: activeQuestionIndex + 1
+            active_question_index: activeQuestionIndex + 1
           }
         }))
       }
