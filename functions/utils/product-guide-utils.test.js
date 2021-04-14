@@ -31,7 +31,7 @@ describe('Product guide utils tests', function () {
     })
   });
 
-  it('should return inactive state with all products as a result', function () {
+  it('should return inactive state with single Mac Pro as a result', function () {
     const response = calculateProductGuideResponse({
       products,
       questions,
