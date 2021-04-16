@@ -45,7 +45,6 @@ exports.handler = async (event) => {
     headers: { 'X-Shopify-Access-Token': password },
   }).then(res => res.json());
 
-  const startsAtInTimezone = getDateInTimezone(timezone, new Date(priceRulesPayload.price_rule.starts_at));
   const endsAtInTimezone = getDateInTimezone(timezone, new Date(priceRulesPayload.price_rule.ends_at));
 
   const endsMonth = months[endsAtInTimezone.getMonth()];
@@ -56,8 +55,8 @@ exports.handler = async (event) => {
     set_attributes:
       {
         discount_code: discountPayload.discount_code.code,
-        starts_at: startsAtInTimezone.toJSON(),
-        ends_at: endsAtInTimezone.toJSON(),
+        starts_at: startsAt.toJSON(),
+        ends_at: endsAt.toJSON(),
         expiration_month: endsMonth,
         expiration_day: endsDay,
         expiration_year: endsYear,
