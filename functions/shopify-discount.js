@@ -13,7 +13,7 @@ exports.handler = async (event) => {
 
   const discountCode = generateRandomDC(8);
   const startsAt = new Date();
-  const endsAt = addDays(startsAt, expiration);
+  const endsAt = addDays(startsAt, parseInt(expiration));
 
   const priceRulesPayload = await fetch(`https://${store_url}/admin/api/2021-04/price_rules.json`, {
     method: 'post',
@@ -30,7 +30,7 @@ exports.handler = async (event) => {
         ends_at: endsAt.toJSON()
       }
     }),
-    headers: { 'X-Shopify-Access-Token': password },
+    headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': password },
   }).then(res => res.json());
 
   const id = priceRulesPayload.price_rule.id;
@@ -42,7 +42,7 @@ exports.handler = async (event) => {
         code: discountCode
       }
     }),
-    headers: { 'X-Shopify-Access-Token': password },
+    headers: { 'Content-Type': 'application/json', 'X-Shopify-Access-Token': password },
   }).then(res => res.json());
 
   const endsAtInTimezone = getDateInTimezone(timezone, new Date(priceRulesPayload.price_rule.ends_at));
