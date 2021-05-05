@@ -10,6 +10,7 @@ exports.handler = async (event) => {
   const payload = JSON.parse(event.body);
   const { timezone, expiration, discount_value, discount_type } = payload;
   const { store_url, password } = payload;
+  const { one_use_per_customer, times_code_can_be_used } = payload;
 
   const discountCode = generateRandomDC(8);
   const startsAt = new Date();
@@ -23,6 +24,8 @@ exports.handler = async (event) => {
         target_type: "line_item",
         target_selection: "all",
         allocation_method: "across",
+        once_per_customer: one_use_per_customer,
+        usage_limit: times_code_can_be_used,
         value_type: discount_type,
         value: discount_value,
         customer_selection: "all",
