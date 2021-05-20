@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const handleCheckShopifyCustomer = async (event) => {
+const handleCheckShopifyCustomer = async event => {
   const payload = JSON.parse(event.body);
 
   const { email, store_url, password } = payload;
@@ -16,24 +16,28 @@ const handleCheckShopifyCustomer = async (event) => {
 
     const { orders } = data;
 
+    if (!orders) {
+      return { hasError: true, errorMessage: `Shopify error: ${data.errors}` };
+    }
+
     return {
       hasError: false,
       response: {
         set_attributes: {
-          customer: orders ? 'existing' : 'new'
+          customer: orders.length ? 'existing' : 'new'
         }
       }
-    }
+    };
   } catch (error) {
-    return { hasError: true, errorMessage: `Error: ${error}` }
+    return { hasError: true, errorMessage: `Error: ${error}` };
   }
-}
+};
 
-exports.handler = async (event) => {
+exports.handler = async event => {
   const { hasError, errorMessage, response } = await handleCheckShopifyCustomer(event);
 
   return {
     statusCode: hasError ? 400 : 200,
     body: hasError ? errorMessage : JSON.stringify(response)
-  }
+  };
 };
