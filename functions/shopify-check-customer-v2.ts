@@ -1,6 +1,7 @@
-const fetch = require('node-fetch');
+import { Handler, HandlerEvent } from '@netlify/functions';
+import fetch from 'node-fetch';
 
-const handleCheckShopifyCustomer = async event => {
+const handleCheckShopifyCustomer = async (event: HandlerEvent) => {
   const payload = JSON.parse(event.body);
 
   const { email, store_url, password } = payload;
@@ -33,7 +34,7 @@ const handleCheckShopifyCustomer = async event => {
   }
 };
 
-exports.handler = async event => {
+export const handler: Handler = async event => {
   const { hasError, errorMessage, response } = await handleCheckShopifyCustomer(event);
 
   return {

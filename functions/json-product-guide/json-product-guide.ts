@@ -1,8 +1,10 @@
-const { calculateProductGuideResponse } = require('../utils/product-guide-utils');
+import { Handler } from '@netlify/functions';
+import { calculateProductGuideResponse } from '../utils/product-guide-utils';
+
 const products = require('./products.json');
 const questions = require('./questions.json');
 
-exports.handler = async (event) => {
+export const handler: Handler = async event => {
   const payload = JSON.parse(event.body);
   const { questions_answers, active_question_index } = payload;
 
@@ -17,6 +19,6 @@ exports.handler = async (event) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify(response),
+    body: JSON.stringify(response)
   };
 };

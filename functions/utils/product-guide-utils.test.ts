@@ -1,4 +1,4 @@
-const { calculateProductGuideResponse } = require('./product-guide-utils');
+import { calculateProductGuideResponse } from './product-guide-utils';
 
 const products = [
   { name: 'Macbook Air', device: 'laptop', size: 'small' },

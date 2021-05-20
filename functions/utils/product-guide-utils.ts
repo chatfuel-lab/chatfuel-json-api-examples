@@ -93,7 +93,7 @@ const createMapFunction = productPropToAttribute => product => {
  * @param {Object} productPropToAttribute - product property to bot attribute
  * @return {Object} Chatfuel JSON API response
  */
-const calculateProductGuideResponse = ({
+export const calculateProductGuideResponse = ({
   products,
   questions,
   answers,
@@ -113,8 +113,4 @@ const calculateProductGuideResponse = ({
     recommendedProductIndex,
     mapProductToAttributes
   });
-};
-
-module.exports = {
-  calculateProductGuideResponse
 };

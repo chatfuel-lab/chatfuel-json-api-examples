@@ -1,6 +1,7 @@
-const fetch = require('node-fetch');
+import { Handler } from '@netlify/functions';
+import fetch from 'node-fetch';
 
-const validateQueryParams = (queryParams) => {
+const validateQueryParams = queryParams => {
   const { email, shop, key, pw } = queryParams;
   if (!email) {
     return { hasError: true, errorMessage: 'Missing email' };
@@ -15,11 +16,11 @@ const validateQueryParams = (queryParams) => {
     return { hasError: true, errorMessage: 'Missing API password' };
   }
   return { hasError: false };
-}
+};
 
-const handleCheckShopifyCustomer = async (event) => {
+const handleCheckShopifyCustomer = async (event): Promise<any> => {
   const queryParams = event.queryStringParameters || {};
-  const validation =  validateQueryParams(queryParams);
+  const validation = validateQueryParams(queryParams);
 
   if (validation.hasError) {
     return validation;
@@ -33,15 +34,15 @@ const handleCheckShopifyCustomer = async (event) => {
     const { orders } = data;
 
     if (!orders) {
-      return { hasError: true, errorMessage: 'Error: Couldn\'t connect to Shopify store.' };
+      return { hasError: true, errorMessage: "Error: Couldn't connect to Shopify store." };
     }
 
     const lowerEmail = email.trim().toLowerCase();
 
     const hasEmailInOrders = orders.some(order => {
       const { email, contact_email } = order;
-      const emailIsOrderEmail = email && (email.trim().toLowerCase() === lowerEmail);
-      const emailIsOrderContactEmail = contact_email && (contact_email.trim().toLowerCase() === lowerEmail);
+      const emailIsOrderEmail = email && email.trim().toLowerCase() === lowerEmail;
+      const emailIsOrderContactEmail = contact_email && contact_email.trim().toLowerCase() === lowerEmail;
 
       return emailIsOrderEmail || emailIsOrderContactEmail;
     });
@@ -53,17 +54,17 @@ const handleCheckShopifyCustomer = async (event) => {
           customer: hasEmailInOrders ? 'existing' : 'new'
         }
       }
-    }
+    };
   } catch (error) {
-    return { hasError: true, errorMessage: `Error: ${error}` }
+    return { hasError: true, errorMessage: `Error: ${error}` };
   }
-}
+};
 
-exports.handler = async (event) => {
+export const handler: Handler = async event => {
   const { hasError, errorMessage, response } = await handleCheckShopifyCustomer(event);
 
   return {
     statusCode: hasError ? 400 : 200,
     body: hasError ? errorMessage : JSON.stringify(response)
-  }
+  };
 };

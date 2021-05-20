@@ -1,4 +1,5 @@
-const dns = require('dns');
+import { Handler } from '@netlify/functions';
+import * as dns from 'dns';
 
 // Check if the lookup response contains ENOTFOUND or ENODATA - if so, it's not valid
 const hasMxRecordError = error => {
@@ -22,7 +23,7 @@ const findMxRecords = email => {
   });
 };
 
-const checkIsValid = async (email) => {
+const checkIsValid = async (email: string) => {
   if (!email.includes('@')) return false;
 
   try {
@@ -31,23 +32,22 @@ const checkIsValid = async (email) => {
   } catch (error) {
     return false;
   }
-}
+};
 
 // Verify an email address
-exports.handler = async (event) => {
+export const handler: Handler = async event => {
   const { email } = event.queryStringParameters || {};
 
   const emailIsValid = await checkIsValid(email);
 
   const response = {
     set_attributes: {
-      emailValid: emailIsValid,
+      emailValid: emailIsValid
     }
-  }
+  };
 
   return {
     statusCode: 200,
-    body: JSON.stringify(response),
+    body: JSON.stringify(response)
   };
-}
-
+};

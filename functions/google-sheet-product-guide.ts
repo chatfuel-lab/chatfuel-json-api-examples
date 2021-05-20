@@ -1,7 +1,8 @@
-const fetch = require('node-fetch');
-const { calculateProductGuideResponse } = require('./utils/product-guide-utils');
+import { Handler } from '@netlify/functions';
+import fetch from 'node-fetch';
+import { calculateProductGuideResponse } from './utils/product-guide-utils';
 
-exports.handler = async event => {
+export const handler: Handler = async event => {
   const payload = JSON.parse(event.body);
   const { questions_answers, active_question_index } = payload;
   const { products_table_ref, questions_table_ref } = payload;

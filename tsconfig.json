@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es6"
+  },
+  "include": [
+    "functions/**/*"
+  ]
+}
