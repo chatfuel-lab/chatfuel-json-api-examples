@@ -1,3 +1,4 @@
 node_modules
 .netlify
 .idea
+package-lock.json
