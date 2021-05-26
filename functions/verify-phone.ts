@@ -9,7 +9,7 @@ export const handler: Handler = async event => {
   const req = `http://apilayer.net/api/validate?access_key=${access_key}&number=${number}&country_code=${country_code}&format=${format}`;
   try {
     const res: any = await fetch(req);
-    const data = await resT.json();
+    const data = await res.json();
 
     const response = {
       set_attributes: {
