@@ -5,7 +5,9 @@ import fetch from 'node-fetch';
 export const handler: Handler = async (event: HandlerEvent) => {
   const payload = JSON.parse(event.body);
   const { access_key, number, country_code, format } = payload || {};
-  const req = `http://apilayer.net/api/validate?access_key=${access_key}&number=${number}&country_code=${country_code}&format=${format}`;
+  const regex = /\D+/gm;
+  const sanitizedNumber = number.toString().replace(regex, '');
+  const req = `http://apilayer.net/api/validate?access_key=${access_key}&number=${sanitizedNumber}&country_code=${country_code}&format=${format}`;
   try {
     const res: any = await fetch(req);
     const data = await res.json();
