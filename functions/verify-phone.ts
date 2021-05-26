@@ -14,7 +14,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
     const data = await res.json();
     const response = {
       set_attributes: {
-        phoneValid: !!data?.valid ? data.valid : false
+        phoneValid: !!data?.valid
       }
     };
     return {
