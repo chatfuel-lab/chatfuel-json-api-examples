@@ -9,7 +9,7 @@ export const handler: Handler = async event => {
   const req = `http://apilayer.net/api/validate?access_key=${access_key}&number=${number}&country_code=${country_code}&format=${format}`;
   try {
     const res: any = await fetch(req);
-    const data = await res.json();
+    const data = await resT.json();
 
     const response = {
       set_attributes: {
@@ -24,7 +24,7 @@ export const handler: Handler = async event => {
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify(`ERROR: ${err.message}`)
+      body: `ERROR: ${err.message}`
     };
   }
 };
