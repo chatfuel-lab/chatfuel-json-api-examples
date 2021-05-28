@@ -21,4 +21,4 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.DEV_NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
-        run: yarn deploys
+        run: yarn deploy
