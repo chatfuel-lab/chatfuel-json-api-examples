@@ -1,10 +1,10 @@
-name: Deploy on dev stand manually
+name: Deploy to prod stand manually
 
 on: workflow_dispatch
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy to prod
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

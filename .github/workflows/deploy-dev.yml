@@ -1,4 +1,4 @@
-name: Deploy on dev stand manually
+name: Deploy to dev stand manually
 
 on: workflow_dispatch
 

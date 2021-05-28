@@ -1,13 +1,13 @@
-name: Deploy on dev stand based on comment
+name: Deploy PR to dev
 
 on:
-  pull_request_review_comment:
-    types: [ created, deleted ]
+  pull_request:
+    types: [ opened, edited, synchronize, reopened ]
 
 jobs:
-  ondemand:
+  deploy:
+    name: Deploy to dev
     runs-on: ubuntu-latest
-    if: github.event.comment.body == 'OK to test'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
