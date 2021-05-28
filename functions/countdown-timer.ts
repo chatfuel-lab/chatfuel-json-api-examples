@@ -12,12 +12,12 @@ export const handler: Handler = async (event: HandlerEvent) => {
   const futureDate = new Date(year, userMonth, day, userTime.hours, userTime.minutes);
 
   //time zone adjust
-  const tzFutureDate = timezone_short ? getDateInTimezone(timezone_short, futureDate) : futureDate;
+  // const tzFutureDate = timezone_short ? getDateInTimezone(timezone_short, futureDate) : futureDate;
   const now = timezone_short ? getDateInTimezone(timezone_short, new Date()) : new Date();
 
   // set up for comparison
   const luxonNow = DateTime.fromISO(now.toISOString());
-  const luxonFutureDate = DateTime.fromISO(tzFutureDate.toISOString());
+  const luxonFutureDate = DateTime.fromISO(futureDate.toISOString());
 
   // get the diff
   const userDiff = luxonFutureDate.diff(luxonNow, ['years', 'months', 'days', 'hours', 'minutes', 'seconds']);
