@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@netlify/functions": "^0.7.2",
+    "luxon": "^1.27.0",
     "node-fetch": "^2.6.1"
   }
 }
