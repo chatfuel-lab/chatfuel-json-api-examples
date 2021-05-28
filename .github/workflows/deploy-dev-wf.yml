@@ -3,6 +3,8 @@ name: Deploy Artifact to dev
 on:
   workflow_run:
     workflows: [ "Collect PR artifact" ]
+    types:
+      - completed
 
 jobs:
   on-success:
@@ -15,14 +17,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: Install Netlify CLI
-        run: yarn global add netlify-cli
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: dawidd6/action-download-artifact@v2
         with:
+          workflow: ${{ github.event.workflow_run.workflow_id }}
           name: netlify-functions
-      - name: Show functions
-        run: ls functions
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
       - name: Deploy
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.DEV_NETLIFY_AUTH_TOKEN }}
