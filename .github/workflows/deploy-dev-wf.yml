@@ -1,0 +1,30 @@
+name: Deploy Artifact to dev
+
+on:
+  workflow_run:
+    workflows: [ "Collect PR artifact" ]
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install Netlify CLI
+        run: yarn global add netlify-cli
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: netlify-functions
+      - name: Show functions
+        run: ls functions
+      - name: Deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.DEV_NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
+        run: netlify deploy --dir=. --functions=functions --prod
