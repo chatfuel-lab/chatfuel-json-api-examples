@@ -11,8 +11,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
   const userTime = parseTime(time);
   const futureDate = new Date(year, userMonth, day, userTime.hours, userTime.minutes);
 
-  //time zone adjust
-  // const tzFutureDate = timezone_short ? getDateInTimezone(timezone_short, futureDate) : futureDate;
+  //time zone adjust so our "now" is in the user's timezone
   const now = timezone_short ? getDateInTimezone(timezone_short, new Date()) : new Date();
 
   // set up for comparison
