@@ -1,13 +1,11 @@
-name: Deploy on dev stand based on comment
+name: Deploy on dev stand manually
 
-on:
-  pull_request_review_comment:
-    types: [ created, deleted ]
+on: workflow_dispatch
 
 jobs:
-  ondemand:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
-    if: github.event.comment.body == 'OK to test'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,6 +17,6 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Deploy
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.DEV_NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.PROD_NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.PROD_NETLIFY_SITE_ID }}
         run: yarn deploy
