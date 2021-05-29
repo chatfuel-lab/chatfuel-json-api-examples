@@ -8,7 +8,18 @@ export const handler: Handler = async (event: HandlerEvent) => {
 
   // construct future date from user input
   const userMonth = Number(months.indexOf(month));
-  const userTime = parseTime(time);
+
+  let adjustedTime = time;
+  // handle exception cases for the noon and midnight hours
+  if (time.startsWith('12') && time.toUpperCase().endsWith('AM')) {
+    adjustedTime = time.replace('12', '00');
+  }
+
+  if (time.startsWith('12') && time.toUpperCase().endsWith('PM')) {
+    adjustedTime = time.replace('PM', 'AM');
+  }
+
+  const userTime = parseTime(adjustedTime);
   const futureDate = new Date(year, userMonth, day, userTime.hours, userTime.minutes);
 
   //time zone adjust so our "now" is in the user's timezone
@@ -28,6 +39,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
 
   // make sure the first item in time_until does not have zero value
   let first = true;
+  let finalTimeUntil = '';
   units.forEach(unitString => {
     if (first && userDiff[unitString] === 0) {
       return false;
@@ -37,12 +49,20 @@ export const handler: Handler = async (event: HandlerEvent) => {
     }
   });
 
-  timeUntil[timeUntil.length - 1] = `and ${timeUntil[timeUntil.length - 1]}`;
+  if (timeUntil.length > 1) {
+    timeUntil[timeUntil.length - 1] = `and ${timeUntil[timeUntil.length - 1]}`;
+  }
+
+  if (timeUntil.length === 2) {
+    finalTimeUntil = timeUntil.join(' ');
+  } else {
+    finalTimeUntil = timeUntil.join(', ');
+  }
 
   const response = {
     set_attributes: {
       time_remaining: luxonFutureDate.diff(luxonNow).toObject().milliseconds > 0 ? true : false,
-      time_until: timeUntil.join(', '),
+      time_until: finalTimeUntil,
       years_until: userDiff.years,
       months_until: userDiff.months,
       days_until: userDiff.days,
