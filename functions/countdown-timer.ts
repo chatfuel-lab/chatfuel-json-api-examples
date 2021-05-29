@@ -8,18 +8,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
 
   // construct future date from user input
   const userMonth = Number(months.indexOf(month));
-
-  let adjustedTime = time;
-  // handle exception cases for the noon and midnight hours
-  if (time.startsWith('12') && time.toUpperCase().endsWith('AM')) {
-    adjustedTime = time.replace('12', '00');
-  }
-
-  if (time.startsWith('12') && time.toUpperCase().endsWith('PM')) {
-    adjustedTime = time.replace('PM', 'AM');
-  }
-
-  const userTime = parseTime(adjustedTime);
+  const userTime = parseTime(time);
   const futureDate = new Date(year, userMonth, day, userTime.hours, userTime.minutes);
 
   //time zone adjust so our "now" is in the user's timezone
