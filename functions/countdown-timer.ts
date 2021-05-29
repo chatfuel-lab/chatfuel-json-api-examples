@@ -27,8 +27,8 @@ export const handler: Handler = async (event: HandlerEvent) => {
   const timeUntil = [];
 
   // make sure the first item in time_until does not have zero value
+  let first = true;
   units.forEach(unitString => {
-    let first = true;
     if (first && userDiff[unitString] === 0) {
       return false;
     } else {
