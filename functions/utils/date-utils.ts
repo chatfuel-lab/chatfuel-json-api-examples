@@ -19,7 +19,7 @@ const HOURS_TO_MINS = 60;
 const HOURS_IN_DAY = 24;
 const DAY_TO_MS = HOURS_IN_DAY * HOURS_TO_MINS * MINS_TO_MS;
 
-const PM_OFFSET = 12;
+const HALF_DAY_HOURS = 12;
 
 /**
  * @param {string} timezone - time zone or number with offset in hours
@@ -57,10 +57,10 @@ const addDays = (date: Date, days: number) => {
  * @return {{ hours: number, minutes: number }} parsed time
  */
 const parseTime = (americanTime: string) => {
-  const offset = americanTime.toUpperCase().endsWith('PM') ? PM_OFFSET : 0;
+  const offset = americanTime.toUpperCase().endsWith('PM') ? HALF_DAY_HOURS : 0;
   const trimmedTime = americanTime.slice(0, americanTime.length - 2);
   const [hoursString, minutesString] = trimmedTime.split(':');
-  return { hours: parseInt(hoursString) + offset, minutes: parseInt(minutesString) };
+  return { hours: (parseInt(hoursString) % HALF_DAY_HOURS) + offset, minutes: parseInt(minutesString) };
 };
 
 /**
