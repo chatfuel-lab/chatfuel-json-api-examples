@@ -12,10 +12,16 @@ export const handler: Handler = async (event: HandlerEvent) => {
   try {
     const res: any = await fetch(req);
     const data = await res.json();
+    const set_attributes = {
+      phoneValid: !!data?.valid
+    };
+
+    for (const [key, value] of Object.entries(data)) {
+      set_attributes[key] = value;
+    }
+
     const response = {
-      set_attributes: {
-        phoneValid: !!data?.valid
-      }
+      set_attributes
     };
     return {
       statusCode: 200,
