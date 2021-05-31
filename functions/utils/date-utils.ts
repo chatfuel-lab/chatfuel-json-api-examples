@@ -60,18 +60,7 @@ const parseTime = (americanTime: string) => {
   const offset = americanTime.toUpperCase().endsWith('PM') ? HALF_DAY_HOURS : 0;
   const trimmedTime = americanTime.slice(0, americanTime.length - 2);
   const [hoursString, minutesString] = trimmedTime.split(':');
-<<<<<<< HEAD
   return { hours: (parseInt(hoursString) % HALF_DAY_HOURS) + offset, minutes: parseInt(minutesString) };
-=======
-
-  // handle exception cases of the midnight and noon hours
-  if (americanTime.startsWith('12')) {
-    return americanTime.toUpperCase().endsWith('PM')
-      ? { hours: 12, minutes: parseInt(minutesString) }
-      : { hours: 0, minutes: parseInt(minutesString) };
-  }
-  return { hours: parseInt(hoursString) + offset, minutes: parseInt(minutesString) };
->>>>>>> e1cf5bb (propose fix in date-utils parseTime to handle noon hour and midnight hour cases properly)
 };
 
 /**
