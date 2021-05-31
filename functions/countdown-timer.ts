@@ -2,12 +2,18 @@ import { Handler, HandlerEvent } from '@netlify/functions';
 import { months, parseTime, getDateInTimezone, getNowInTimezone } from './utils/date-utils';
 import { DateTime, DurationUnits } from 'luxon';
 
+const toTitleCase = (str: string) => {
+  return str.replace(/\w\S*/g, function (txt: string) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+};
+
 export const handler: Handler = async (event: HandlerEvent) => {
   const payload = JSON.parse(event.body);
   const { month, day, year, time, timezone_short } = payload || {};
 
   // construct future date from user input
-  const userMonth = Number(months.indexOf(month));
+  const userMonth = Number(months.indexOf(toTitleCase(month)));
   const userTime = parseTime(time);
   const futureDate = new Date(year, userMonth, day, userTime.hours, userTime.minutes);
 
