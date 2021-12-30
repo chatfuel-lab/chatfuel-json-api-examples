@@ -7,7 +7,8 @@
   },
   "homepage": "https://github.com/chatfuel-lab/chatfuel-json-api-examples",
   "scripts": {
-    "deploy": "netlify deploy --dir=. --functions=functions --prod"
+    "deploy": "netlify deploy --dir=. --functions=functions --prod",
+    "start": "netlify functions:serve"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
