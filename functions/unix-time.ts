@@ -5,7 +5,7 @@ export const handler: Handler = async () => {
 
   const response = {
     millis: now,
-    seconds: now / 1000,
+    seconds: Math.floor(now / 1000),
   }
 
   return {
